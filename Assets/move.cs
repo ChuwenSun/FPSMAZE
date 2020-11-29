@@ -7,7 +7,7 @@ public class move : MonoBehaviour
     // Start is called before the first frame update
     public CharacterController controller;
 
-    public float speed = 12f;
+    public float speed = 3f;
     void Start()
     {
         
@@ -21,7 +21,7 @@ public class move : MonoBehaviour
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * speed * 0.0025f);
 
     }
 }
