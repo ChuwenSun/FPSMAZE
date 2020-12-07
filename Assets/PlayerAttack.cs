@@ -11,9 +11,13 @@ public class PlayerAttack : MonoBehaviour
     private float nextTimeToFire;
     public float damage = 20f;
 
+    private Camera mainCam;
+    //private GameObject crosshair;
     private void Awake()
     {
         weapon_Manager = GetComponent<WeaponManager>();
+        //crosshair = GameObject.FindWithTag("Crosshair");
+        mainCam = Camera.main;
     }
     // Start is called before the first frame update
     void Start()
@@ -38,6 +42,8 @@ public class PlayerAttack : MonoBehaviour
                 nextTimeToFire = Time.time + 1f / fireRate;
 
                 weapon_Manager.GetCurrentSelectedWeapon().ShootAnimation();
+
+                BulletFired();
             }
         }
         else
@@ -52,8 +58,18 @@ public class PlayerAttack : MonoBehaviour
                 if (weapon_Manager.GetCurrentSelectedWeapon().bulletType == WeaponBulletType.BULLET) 
                 {
                     weapon_Manager.GetCurrentSelectedWeapon().ShootAnimation();
+                    BulletFired();
                 }
             }
+        }
+    }
+    void BulletFired()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit))
+        {
+            Debug.Log("WE HIT: " + hit.transform.gameObject.name);
         }
     }
 }
