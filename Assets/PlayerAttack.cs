@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour
 
     private WeaponManager weapon_Manager;
 
-    public float fireRate = 15f;
+    public float fireRate = 3f;
     private float nextTimeToFire;
     public float damage = 20f;
 
@@ -50,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if(weapon_Manager.GetCurrentSelectedWeapon().tag == "Axe")
+                if(weapon_Manager.GetCurrentSelectedWeapon().bulletType == WeaponBulletType.NONE)
                 {
                     weapon_Manager.GetCurrentSelectedWeapon().ShootAnimation();
                 }
@@ -69,6 +69,10 @@ public class PlayerAttack : MonoBehaviour
 
         if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit))
         {
+            if (hit.transform.tag == "enemy")
+            {
+                hit.transform.GetComponent<HealthScript>().ApplyDamage(damage);
+            }
             Debug.Log("WE HIT: " + hit.transform.gameObject.name);
         }
     }
